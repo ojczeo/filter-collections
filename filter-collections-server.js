@@ -1,5 +1,5 @@
 Meteor.FilterCollections = {};
-
+var logger = loggerFactory('filter-collections-server')
 Meteor.FilterCollections.publish = function (collection, options) {
 
   var self = this;
@@ -43,6 +43,9 @@ Meteor.FilterCollections.publish = function (collection, options) {
 
     if (callbacks.beforePublish && _.isFunction(callbacks.beforePublish))
       query = callbacks.beforePublish(query, this) || query;
+
+    logger.log('query.selector\n', JSON.stringify(query.selector, null, 2) )
+    logger.log('query.options\n', JSON.stringify(query.options, null, 2) )
 
     var cursor = collection.find(query.selector, query.options);
 

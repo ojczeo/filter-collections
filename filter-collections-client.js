@@ -1,4 +1,8 @@
+var logger = loggerFactory('parhelium:filter-collections', true);
+
 Meteor.FilterCollections = function (collection, settings) {
+
+  logger.log('constructor');
 
   var self = this;
 
@@ -69,6 +73,8 @@ Meteor.FilterCollections = function (collection, settings) {
 
     Tracker.autorun(function (computation) {
 
+      //logger.log('_autorun', computation.status);
+
       if (!_initialized) {
         self.sort.init(); // Set default query values for sorting.
         self.pager.init(); // Set defaul query values for paging.
@@ -81,6 +87,7 @@ Meteor.FilterCollections = function (collection, settings) {
       if (_.isFunction(_callbacks.beforeSubscribe))
         query = _callbacks.beforeSubscribe(query) || query;
 
+      logger.log('_autorun','\nquery = ', query);
       _subs.results = Meteor.subscribe(_subscriptionResultsId, query, {
         onError: function(error){
           if (_.isFunction(_callbacks.afterSubscribe))
@@ -625,19 +632,22 @@ Meteor.FilterCollections = function (collection, settings) {
       this.set(_query);
     },
     getResults: function(){
+      logger.log( 'getResults' )
+
+      _deps.query.depend();
+
       var q = _.clone(_query);
       q.options = _.omit(q.options, 'skip', 'limit');
 
       if (_.isFunction(_callbacks.beforeResults))
         q = _callbacks.beforeResults(q) || q;
 
-      console.log('in getResults', self._collection)
-      console.log('in getResults', self)
+
+      logger.log('query.selector\n', JSON.stringify(q.selector, null, 2) )
+      logger.log('query.options\n', JSON.stringify(q.options, null, 2) )
 
       var cursor = self._collection.find(q.selector, q.options);
-      // var cursor = NflPlayers.find(q.selector, q.options);
 
-      console.log('in getResults', cursor)
 
       if (_.isFunction(_callbacks.afterResults))
         cursor = _callbacks.afterResults(cursor) || cursor;
@@ -654,7 +664,6 @@ Meteor.FilterCollections = function (collection, settings) {
 
     Template[_template].created = function () {
       _autorun();
-
       if (_.isFunction(_callbacks.templateCreated))
         _callbacks.templateCreated(this);
 
