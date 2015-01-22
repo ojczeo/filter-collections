@@ -1,4 +1,4 @@
-var logger = loggerFactory('parhelium:filter-collections', true);
+var logger = loggerFactory('parhelium:filter-collections', false);
 
 Meteor.FilterCollections = function (collection, settings) {
 
