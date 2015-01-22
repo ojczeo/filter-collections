@@ -461,6 +461,8 @@ Meteor.FilterCollections = function (collection, settings) {
     getActive: function(){
       var filters = [];
 
+      _deps.query.depend();
+
       _.each(_filters, function (filter, key) {
         if (filter.value)
           filters.push({
