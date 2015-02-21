@@ -645,8 +645,8 @@ Meteor.FilterCollections = function (collection, settings) {
         q = _callbacks.beforeResults(q) || q;
 
 
-      logger.log('query.selector\n', JSON.stringify(q.selector, null, 2) )
-      logger.log('query.options\n', JSON.stringify(q.options, null, 2) )
+      //logger.log('query.selector\n', JSON.stringify(q.selector, null, 2) )
+      //logger.log('query.options\n', JSON.stringify(q.options, null, 2) )
 
       var cursor = self._collection.find(q.selector, q.options);
 
@@ -682,8 +682,10 @@ Meteor.FilterCollections = function (collection, settings) {
 
     /** Template cleanup. **/
     Template[_template].destroyed = function () {
-      _subs.results.stop();
-      _subs.count.stop();
+      if( _subs && _subs.results )
+        _subs.results.stop();
+      if( _subs && _subs.count )
+        _subs.count.stop();
 
       if (_.isFunction(_callbacks.templateDestroyed))
         _callbacks.templateDestroyed(this);

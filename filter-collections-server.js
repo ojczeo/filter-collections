@@ -22,6 +22,8 @@ Meteor.FilterCollections.publish = function (collection, options) {
 
   Meteor.publish(publisherResultsId, function (query) {
 
+    check(query, Object);
+
     var allow = true;
 
     if (callbacks.allow && _.isFunction(callbacks.allow))
@@ -60,6 +62,7 @@ Meteor.FilterCollections.publish = function (collection, options) {
    */
 
   Meteor.publish(publisherCountId, function (query) {
+    check(query, Object);
     var self = this;
     var allow = true;
     var cursor = {};
