@@ -1,6 +1,6 @@
 Package.describe( {
     summary: "Smart package for Meteor that adds filter and pager behavior to our Meteor's collections.",
-    version: "0.2.1",
+    version: "0.2.2",
     name: 'parhelium:filter-collections',
     git: "https://github.com/parhelium/filter-collections"
 } );
