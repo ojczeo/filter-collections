@@ -1,1 +1,1 @@
-Fork of *:filter-collections package ( don't remember the first author )
+Fork of  ericchen0121/filter-collections package ( don't remember the first author ) with fixes ( sorting, fitlering )
