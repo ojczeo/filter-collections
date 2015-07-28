@@ -1,5 +1,5 @@
 Package.describe( {
-    summary: " Smart package for Meteor that adds filter and pager behavior to our Meteor's collections.",
+    summary: "Smart package for Meteor that adds filter and pager behavior to our Meteor's collections.",
     version: "0.2.1",
     name: 'parhelium:filter-collections',
     git: "https://github.com/parhelium/filter-collections"
@@ -11,7 +11,6 @@ Package.onUse( function ( api ) {
     var all = ['client', 'server'];
     api.use( [
         'underscore',
-        'parhelium:logger'
     ], all );
 
     api.addFiles( 'filter-collections-client.js', ['client'] );
