@@ -99,6 +99,7 @@ FilterCollections = function (collection, settings) {
 
             _subs.results = Meteor.subscribe(_subscriptionResultsId, query, {
                 onError: function (error) {
+                    console.warn(error)
                     if (_.isFunction(_callbacks.afterSubscribe)) {
                         _callbacks.afterSubscribe(error, this);
                     }
@@ -510,6 +511,15 @@ FilterCollections = function (collection, settings) {
                 delete _filters[key].value;
                 _filters[key].active = false;
             }
+            else if ( self.filter.getActive().length ) {
+                for( var key in _filters ) {
+                    if ( _filters.hasOwnProperty( key ) && _filters[key].value) {
+                        delete _filters[key].value;
+                        _filters[key].active = false;
+                    }
+                }
+
+            }
 
             if (triggerUpdate) {
                 this.run();
@@ -640,7 +650,6 @@ FilterCollections = function (collection, settings) {
             if (_.isFunction(_callbacks.beforeResults)) {
                 temporaryQuery = _callbacks.beforeResults(temporaryQuery) || temporaryQuery;
             }
-
             var cursor = self._collection.find({
                 __filter: _subscriptionResultsId
             }, temporaryQuery.options);
