@@ -384,11 +384,14 @@ FilterCollections = function (collection, settings) {
         },
         setTotals: function (res) {
             if(res) {
+                var serverQuery = res.query || {};
                 _pager.totalItems = res.count;
                 _pager.totalPages = Math.ceil(_pager.totalItems / _pager.itemsPerPage);
+                _pager.serverQuery = serverQuery;
             } else {
                 _pager.totalItems = 0;
                 _pager.totalPages = 1;
+                _pager.serverQuery = {};
             }
 
             self.pager.set();

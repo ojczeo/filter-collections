@@ -10,7 +10,8 @@ Package.onUse(function (api) {
 
     api.use('underscore', ['client', 'server']);
     api.use('logging', ['server']);
-
+    api.use('ecmascript');
+    
     api.addFiles('filter-collections-client.js', ['client']);
     api.addFiles('filter-collections-server.js', ['server']);
     api.export('FilterCollections');
